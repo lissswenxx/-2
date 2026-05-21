@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Библиотечная система</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>📚 Библиотечная система</h1>
+        
+        <div class="mode-badge">
+            📡 Режим доступа: <span id="modeIndicator">Загрузка...</span>
+        </div>
+
+        <!-- Блок 1: Иерархия разделов -->
+        <div class="card">
+            <h2>📁 Иерархия разделов (Жанры → Категории → Подкатегории)</h2>
+            <div class="form-row">
+                <input type="text" id="sectionName" placeholder="Название раздела">
+                <select id="sectionType">
+                    <option value="genre">📖 Жанр</option>
+                    <option value="category">📂 Категория</option>
+                    <option value="subcategory">📁 Подкатегория</option>
+                </select>
+                <input type="number" id="parentSectionId" placeholder="ID родителя (0=корень)">
+                <button onclick="createSection()">➕ Создать раздел</button>
+            </div>
+            <button onclick="loadTree()">🌳 Показать дерево разделов</button>
+            <div id="treeContainer" class="tree-view"></div>
+        </div>
+
+        <!-- Блок 2: Создание книги -->
+        <div class="card">
+            <h2>📖 Книга</h2>
+            <div class="form-row">
+                <input type="text" id="bookTitle" placeholder="Название">
+                <input type="text" id="bookAuthor" placeholder="Автор">
+                <input type="number" id="bookYear" placeholder="Год">
+                <input type="text" id="bookPublisher" placeholder="Издательство">
+                <input type="number" id="bookSectionId" placeholder="ID раздела">
+            </div>
+            <div class="form-row">
+                <input type="text" id="bookIsbn" placeholder="ISBN">
+                <input type="number" id="bookPages" placeholder="Кол-во страниц">
+                <input type="text" id="bookGenre" placeholder="Жанр книги">
+            </div>
+            <button onclick="createBook()">📖 Добавить книгу</button>
+            <div id="bookMessage"></div>
+        </div>
+
+        <!-- Блок 3: Создание журнала -->
+        <div class="card">
+            <h2>📰 Журнал</h2>
+            <div class="form-row">
+                <input type="text" id="magTitle" placeholder="Название">
+                <input type="text" id="magAuthor" placeholder="Редакция">
+                <input type="number" id="magYear" placeholder="Год">
+                <input type="text" id="magPublisher" placeholder="Издательство">
+                <input type="number" id="magSectionId" placeholder="ID раздела">
+            </div>
+            <div class="form-row">
+                <input type="text" id="magIssn" placeholder="ISSN">
+                <input type="number" id="magIssueNumber" placeholder="Номер выпуска">
+                <input type="text" id="magFrequency" placeholder="Периодичность">
+            </div>
+            <button onclick="createMagazine()">📰 Добавить журнал</button>
+            <div id="magMessage"></div>
+        </div>
+
+        <!-- Блок 4: Создание газеты -->
+        <div class="card">
+            <h2>📰 Газета</h2>
+            <div class="form-row">
+                <input type="text" id="newsTitle" placeholder="Название">
+                <input type="text" id="newsAuthor" placeholder="Редакция">
+                <input type="number" id="newsYear" placeholder="Год">
+                <input type="text" id="newsPublisher" placeholder="Издательство">
+                <input type="number" id="newsSectionId" placeholder="ID раздела">
+            </div>
+            <div class="form-row">
+                <input type="text" id="newsIssn" placeholder="ISSN">
+                <input type="date" id="newsDate" placeholder="Дата выпуска">
+                <input type="text" id="newsCity" placeholder="Город">
+            </div>
+            <button onclick="createNewspaper()">📰 Добавить газету</button>
+            <div id="newsMessage"></div>
+        </div>
+
+        <!-- Блок 5: Поиск и управление -->
+        <div class="card">
+            <h2>🔍 Поиск и управление изданиями</h2>
+            <div class="form-row">
+                <input type="number" id="searchId" placeholder="Введите ID издания">
+                <button onclick="searchPublication()">🔎 Найти</button>
+                <button onclick="showHistory()">📜 История версий</button>
+                <button onclick="openUpdateModal()" class="btn-warning">✏️ Обновить</button>
+                <button onclick="deletePublication()" class="btn-danger">🗑️ Удалить</button>
+            </div>
+            <div id="publicationInfo"></div>
+            <div id="historyInfo"></div>
+        </div>
+
+        <!-- Блок 6: Список книг -->
+        <div class="card">
+            <h2>📋 Список книг</h2>
+            <button onclick="loadBooks()">🔄 Обновить список</button>
+            <div id="booksList"></div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для обновления -->
+    <div id="updateModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeUpdateModal()">&times;</span>
+            <h3>✏️ Обновить издание</h3>
+            <p>Будет создана новая версия</p>
+            <input type="text" id="updateTitle" placeholder="Новое название">
+            <input type="text" id="updateAuthor" placeholder="Новый автор">
+            <input type="text" id="updatePublisher" placeholder="Новое издательство">
+            <button onclick="updatePublication()" class="btn-success">💾 Сохранить новую версию</button>
+            <button onclick="closeUpdateModal()" class="btn-danger">❌ Отмена</button>
+            <div id="updateMessage"></div>
+        </div>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
